@@ -25,4 +25,35 @@ public class AdicionaisDAO {
             return false;
         }
     }
+    public boolean deletarAdicional() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement removerAdicional = condb.prepareStatement("DELETE FROM adicionais WHERE id = ?;");
+            removerAdicional.setInt(1, 1);
+            int linhasAfetada = removerAdicional.executeUpdate();
+            condb.close();
+            return linhasAfetada > 0;
+
+        } catch (Exception erro) {
+            System.out.println("Erro ao deletar adicional: " + erro);
+            return false;
+        }
+    }
+    public boolean atualizarAdicional() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement atualizaAdicional = condb.prepareStatement("UPDATE adicionais SET nome = ?, preco = ? WHERE id = ?;");
+
+            //Setar parametros
+            atualizaAdicional.setString(1, "breja");
+            atualizaAdicional.setDouble(2, 5.55);
+            atualizaAdicional.setInt(3, 1);
+
+            int LinhaAfetada = atualizaAdicional.executeUpdate();
+            return LinhaAfetada > 0;
+        } catch (Exception erro) {
+            System.out.println("Erro ao atualizar adicional: " + erro);
+            return false;
+        }
+    }
 }

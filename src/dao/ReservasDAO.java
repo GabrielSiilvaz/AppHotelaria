@@ -9,22 +9,17 @@ public class ReservasDAO {
 
     private Conexao conexao = new Conexao();
 
-    public boolean inserirReserva() {
+    public boolean deletarReserva() {
         try {
             Connection condb = conexao.conectar();
-            PreparedStatement novaReserva = condb.prepareStatement("INSERT INTO reservas" +
-                    "() VALUES (?, ?, ?, ?);");
+            PreparedStatement removerReserva = condb.prepareStatement("DELETE FROM reservas WHERE id = ?;");
+            removerReserva.setInt(1, 1);
+            int linhasAfetada = removerReserva.executeUpdate();
+            condb.close();
+            return linhasAfetada > 0;
 
-            //Setar parametros
-            novaReserva.setString(1, "Gabriel");
-            novaReserva.setString(2, "");
-            novaReserva.setString(3, "Gabriel");
-            novaReserva.setString(4, "Gabriel");
-
-            int LinhaAfetada = novaReserva.executeUpdate();
-            return LinhaAfetada > 0;
         } catch (Exception erro) {
-            System.out.println("Erro ao inserir Reserva: " + erro);
+            System.out.println("Erro ao deletar reserva: " + erro);
             return false;
         }
     }
