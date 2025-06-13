@@ -55,7 +55,7 @@ public class CargosDAO {
             return false;
         }
     }
-    public boolean pesquisarCargos() {
+    public void pesquisarCargos() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarCargos = condb.prepareStatement("SELECT nome" + " FROM permissao WHERE id = ?");
@@ -74,6 +74,5 @@ public class CargosDAO {
             System.out.println("Erro ao pesquisar cargo: " + erro);
 
         }
-        return false;
     }
 }

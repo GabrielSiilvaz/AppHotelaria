@@ -61,7 +61,7 @@ public class ClientesDAO {
             return false;
         }
     }
-    public boolean pesquisarClientes() {
+    public void pesquisarClientes() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarClientes = condb.prepareStatement("SELECT nome, email, cpf, telefone" + " FROM clientes WHERE id = ?");
@@ -83,6 +83,5 @@ public class ClientesDAO {
             System.out.println("Erro ao pesquisar cliente: " + erro);
 
         }
-        return false;
     }
 }

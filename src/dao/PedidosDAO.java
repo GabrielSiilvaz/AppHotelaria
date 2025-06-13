@@ -57,7 +57,7 @@ public class PedidosDAO {
             return false;
         }
     }
-    public boolean pesquisarPedidos() {
+    public void pesquisarPedidos() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarPedidos = condb.prepareStatement("SELECT pagamento" + " FROM pedidos WHERE id = ?");
@@ -76,6 +76,5 @@ public class PedidosDAO {
             System.out.println("Erro ao pesquisar pedido: " + erro);
 
         }
-        return false;
     }
 }

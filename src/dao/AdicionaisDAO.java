@@ -57,7 +57,7 @@ public class AdicionaisDAO {
             return false;
         }
     }
-    public boolean pesquisarAdicional() {
+    public void pesquisarAdicional() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarAdicional = condb.prepareStatement("SELECT nome, preco" + " FROM adicionais WHERE id = ?");
@@ -77,6 +77,5 @@ public class AdicionaisDAO {
             System.out.println("Erro ao pesquisar adicional: " + erro);
 
         }
-        return false;
     }
 }

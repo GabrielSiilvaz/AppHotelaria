@@ -61,7 +61,8 @@ public class UsuarioDAO {
             return false;
         }
     }
-    public boolean pesquisarUsuario() {
+
+    public void pesquisarUsuario() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarUsuarios = condb.prepareStatement("SELECT nome, email" + " FROM usuarios WHERE id_perm_fk = ?");
@@ -81,6 +82,6 @@ public class UsuarioDAO {
             System.out.println("Erro ao pesquisar usuario: " + erro);
 
         }
-        return false;
     }
 }
+

@@ -68,7 +68,7 @@ public class QuartosDAO {
             return false;
         }
     }
-    public boolean pesquisarQuarto() {
+    public void pesquisarQuarto() {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement buscarQuarto = condb.prepareStatement("SELECT nome, numero, tipo, camaSolteiro, camaCasal, preco, disponivel" + " FROM quartos WHERE id = ?");
@@ -95,6 +95,6 @@ public class QuartosDAO {
             System.out.println("Erro ao pesquisar quarto: " + erro);
 
         }
-        return false;
+
     }
 }
