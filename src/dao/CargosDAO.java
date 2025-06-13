@@ -4,6 +4,7 @@ import util.Conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class CargosDAO {
 
@@ -53,5 +54,26 @@ public class CargosDAO {
             System.out.println("Erro ao atualizar cargo: " + erro);
             return false;
         }
+    }
+    public boolean pesquisarCargos() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement buscarCargos = condb.prepareStatement("SELECT nome" + " FROM permissao WHERE id = ?");
+
+            //Setar parametros
+            buscarCargos.setInt(1, 1);
+            ResultSet resultado = buscarCargos.executeQuery();
+
+            while (resultado.next()) {
+               String nome = resultado.getString("nome");
+               System.out.println("Cargo: " + nome);
+            }
+            condb.close();
+
+        } catch (Exception erro) {
+            System.out.println("Erro ao pesquisar cargo: " + erro);
+
+        }
+        return false;
     }
 }

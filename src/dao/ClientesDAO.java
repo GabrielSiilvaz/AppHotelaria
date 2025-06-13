@@ -4,6 +4,7 @@ import util.Conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ClientesDAO {
 
@@ -59,5 +60,29 @@ public class ClientesDAO {
             System.out.println("Erro ao atualizar cliente: " + erro);
             return false;
         }
+    }
+    public boolean pesquisarClientes() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement buscarClientes = condb.prepareStatement("SELECT nome, email, cpf, telefone" + " FROM clientes WHERE id = ?");
+
+            //Setar parametros
+            buscarClientes.setInt(1, 1);
+            ResultSet resultado = buscarClientes.executeQuery();
+
+            while (resultado.next()) {
+               String nome = resultado.getString("nome");
+               String email = resultado.getString("email");
+               String cpf = resultado.getString("cpf");
+               String telefone = resultado.getString("telefone");
+               System.out.println("Nome: " + nome + "\nEmail: " + email + "\nCPF: " + cpf + "\nTelefone: " + telefone);
+            }
+            condb.close();
+
+        } catch (Exception erro) {
+            System.out.println("Erro ao pesquisar cliente: " + erro);
+
+        }
+        return false;
     }
 }

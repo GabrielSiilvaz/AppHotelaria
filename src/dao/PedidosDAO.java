@@ -4,6 +4,7 @@ import util.Conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class PedidosDAO {
 
@@ -13,12 +14,10 @@ public class PedidosDAO {
         try {
             Connection condb = conexao.conectar();
             PreparedStatement novoPedido = condb.prepareStatement("INSERT INTO pedidos" +
-                    "(Id_usuario_fk, id_cliente_fk, pagamento) VALUES (?, ?, ?);");
+                    "(pagamento) VALUES (?);");
 
             //Setar parametros
-            novoPedido.setInt(1, 1);
-            novoPedido.setInt(2, 4);
-            novoPedido.setString(3, "Pix");
+            novoPedido.setString(1, "Pix");
             int LinhaAfetada = novoPedido.executeUpdate();
             return LinhaAfetada > 0;
         } catch (Exception erro) {
@@ -57,5 +56,26 @@ public class PedidosDAO {
             System.out.println("Erro ao atualizar o pedido: " + erro);
             return false;
         }
+    }
+    public boolean pesquisarPedidos() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement buscarPedidos = condb.prepareStatement("SELECT pagamento" + " FROM pedidos WHERE id = ?");
+
+            //Setar parametros
+            buscarPedidos.setInt(1, 3);
+            ResultSet resultado = buscarPedidos.executeQuery();
+
+            while (resultado.next()) {
+                 String pagamento = resultado.getString("pagamento");
+                 System.out.println("Pagamento: " + pagamento);
+            }
+            condb.close();
+
+        } catch (Exception erro) {
+            System.out.println("Erro ao pesquisar pedido: " + erro);
+
+        }
+        return false;
     }
 }

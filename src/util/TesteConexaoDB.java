@@ -11,28 +11,32 @@ public class TesteConexaoDB {
             System.out.println("Conexão estabelecida com sucesso!");
             try {
                 /*UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.deletarUsuario();
-                System.out.println("Usuario deletado com sucesso!");*/
+                usuarioDAO.pesquisarUsuario();
+                System.out.println("Usuario encontrado com sucesso!");*/
 
                 /*ClientesDAO clientesDAO = new ClientesDAO();
-                clientesDAO.deletarClientes();
-                System.out.println("Cliente deletado com sucesso!");*/
+                clientesDAO.pesquisarClientes();
+                System.out.println("Cliente encontrado com sucesso!");*/
 
-                AdicionaisDAO adicionaisDAO = new AdicionaisDAO();
-                adicionaisDAO.atualizarAdicional();
-                System.out.println("Adicional atualizado com sucesso!");
+                /*AdicionaisDAO adicionaisDAO = new AdicionaisDAO();
+                adicionaisDAO.pesquisarAdicional();
+                System.out.println("Adicional encontrado com sucesso!");*/
 
                 /*CargosDAO cargosDAO = new CargosDAO();
-                cargosDAO.deletarCargo();
-                System.out.println("Cargo deletado com sucesso!");*/
+                cargosDAO.pesquisarCargos();
+                System.out.println("Cargo encontrado com sucesso!");*/
 
                 /*QuartosDAO quartosDAO = new QuartosDAO();
-                quartosDAO.deletarQuarto();
-                System.out.println("Quarto inserido com sucesso!");*/
+                quartosDAO.pesquisarQuarto();
+                System.out.println("Quarto encontrado com sucesso!");*/
 
                 /*ReservasDAO reservasDAO = new ReservasDAO();
                 reservasDAO.deletarReserva();
                 System.out.println("Reserva deletada com sucesso!");*/
+
+                /*PedidosDAO pedidosDAO = new PedidosDAO();
+                pedidosDAO.pesquisarPedidos();
+                System.out.println("Pedido encontrado com sucesso!");*/
 
                 condb.close();
                 System.out.println("Conexão encerrada!");

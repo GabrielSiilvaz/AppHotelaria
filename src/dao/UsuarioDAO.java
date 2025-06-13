@@ -4,6 +4,7 @@ import util.Conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class UsuarioDAO {
 
@@ -59,5 +60,27 @@ public class UsuarioDAO {
             System.out.println("Erro ao atualizar usuario: " + erro);
             return false;
         }
+    }
+    public boolean pesquisarUsuario() {
+        try {
+            Connection condb = conexao.conectar();
+            PreparedStatement buscarUsuarios = condb.prepareStatement("SELECT nome, email" + " FROM usuarios WHERE id_perm_fk = ?");
+
+            //Setar parametros
+            buscarUsuarios.setInt(1, 1);
+            ResultSet resultado = buscarUsuarios.executeQuery();
+
+            while (resultado.next()) {
+                String nome = resultado.getString("nome");
+                String email = resultado.getString("email");
+                System.out.println("Nome: " + nome + "\nEmail: " + email);
+            }
+            condb.close();
+
+        } catch (Exception erro) {
+            System.out.println("Erro ao pesquisar usuario: " + erro);
+
+        }
+        return false;
     }
 }
