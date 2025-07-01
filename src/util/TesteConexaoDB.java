@@ -1,4 +1,5 @@
 package util;
+import controller.UsuarioController;
 import dao.*;
 
 import java.sql.Connection;
@@ -6,12 +7,14 @@ import java.sql.Connection;
 public class TesteConexaoDB {
     public static void main(String[] args) {
         Conexao conexao = new Conexao();
+        UsuarioController usuarioController = new UsuarioController();
         Connection condb = conexao.conectar();
         if (condb != null) {
             System.out.println("Conexão estabelecida com sucesso!");
             try {
+                usuarioController.verificarCredenciais("gabriell@gmail.com", "Gabriel9098");
                 /*UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.pesquisarUsuario();
+                usuarioDAO.autenticarUsuario();
                 System.out.println("Usuario encontrado com sucesso!");*/
 
                 /*ClientesDAO clientesDAO = new ClientesDAO();

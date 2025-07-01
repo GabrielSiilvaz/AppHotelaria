@@ -1,5 +1,6 @@
 package dao;
 
+import model.Usuarios;
 import util.Conexao;
 
 import java.sql.Connection;
@@ -48,11 +49,11 @@ public class UsuarioDAO {
             PreparedStatement atualizaUsuario = condb.prepareStatement("UPDATE usuarios SET nome = ?, email = ?, senha = md5(?), id_perm_fk = ? WHERE id = ?;");
 
             //Setar parametros
-            atualizaUsuario.setString(1, "Gabriel");
-            atualizaUsuario.setString(2, "gabrielll@gmail.com");
-            atualizaUsuario.setString(3, "Gabriel99098");
+            atualizaUsuario.setString(1, "Silvia");
+            atualizaUsuario.setString(2, "gabriell@gmail.com");
+            atualizaUsuario.setString(3, "Gabriel9098");
             atualizaUsuario.setInt(4, 1);
-            atualizaUsuario.setInt(5, 1);
+            atualizaUsuario.setInt(5, 5);
 
             int LinhaAfetada = atualizaUsuario.executeUpdate();
             return LinhaAfetada > 0;
@@ -62,24 +63,25 @@ public class UsuarioDAO {
         }
     }
 
-    public void pesquisarUsuario() {
+    public boolean autenticarUsuario(Usuarios usuarios) {
         try {
             Connection condb = conexao.conectar();
-            PreparedStatement buscarUsuarios = condb.prepareStatement("SELECT nome, email" + " FROM usuarios WHERE id_perm_fk = ?");
+            PreparedStatement stmt = condb.prepareStatement("SELECT nome" + " FROM usuarios WHERE email = ? AND senha = md5(?);");
 
             //Setar parametros
-            buscarUsuarios.setInt(1, 1);
-            ResultSet resultado = buscarUsuarios.executeQuery();
+            stmt.setString(1, usuarios.getEmail());
+            stmt.setString(2, usuarios.getSenha());
+            ResultSet resultado = stmt.executeQuery();
+            boolean acessoAutorizado = resultado.next();
+            String nome = resultado.getString("nome");
+            System.out.println("Olá, seja bem-vindo, " + nome);
 
-            while (resultado.next()) {
-                String nome = resultado.getString("nome");
-                String email = resultado.getString("email");
-                System.out.println("Nome: " + nome + "\nEmail: " + email);
-            }
             condb.close();
+            return acessoAutorizado;
 
         } catch (Exception erro) {
             System.out.println("Erro ao pesquisar usuario: " + erro);
+            return false;
 
         }
     }
