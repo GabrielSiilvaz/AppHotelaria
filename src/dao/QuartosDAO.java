@@ -1,5 +1,6 @@
 package dao;
 
+import model.Quartos;
 import util.Conexao;
 
 import java.sql.Connection;
@@ -10,19 +11,18 @@ public class QuartosDAO {
 
     private Conexao conexao = new Conexao();
 
-    public boolean inserirQuarto() {
+    public boolean inserirQuarto(Quartos quarto) {
         try {
             Connection condb = conexao.conectar();
-            PreparedStatement novoQuarto = condb.prepareStatement("INSERT INTO quartos (nome, numero, tipo, camaSolteiro, camaCasal, disponível, preco) VALUES (?, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement novoQuarto = condb.prepareStatement("INSERT INTO quartos (nome, numero, camaSolteiro, camaCasal, disponível, preco) VALUES (?, ?, ?, ?, ?, ?);");
 
             //Setar parametros
-            novoQuarto.setString(1, "quarto");
-            novoQuarto.setString(2, "777");
-            novoQuarto.setString(3, "Familia");
-            novoQuarto.setInt(4, 2);
-            novoQuarto.setInt(5, 1);
-            novoQuarto.setInt(6, 1);
-            novoQuarto.setDouble(7, 150.00);
+            novoQuarto.setString(1, quarto.getNome());
+            novoQuarto.setString(2, quarto.getNumero());
+            novoQuarto.setInt(3, quarto.getQtd_cama_solteiro());
+            novoQuarto.setInt(4, quarto.getQtd_cama_casal());
+            novoQuarto.setBoolean(5, quarto.isDisponivel());
+            novoQuarto.setDouble(6, quarto.getPreco());
 
 
             int LinhaAfetada = novoQuarto.executeUpdate();
@@ -49,17 +49,15 @@ public class QuartosDAO {
     public boolean atualizarQuarto() {
         try {
             Connection condb = conexao.conectar();
-            PreparedStatement atualizaQuarto = condb.prepareStatement("UPDATE quartos SET nome = ?, numero = ?, tipo = ?, camaSolteiro = ?, camaCasal = ?, disponivel = ?, preco = ?, WHERE id = ?;");
+            PreparedStatement atualizaQuarto = condb.prepareStatement("UPDATE quartos SET nome = ?, numero = ?, camaSolteiro = ?, camaCasal = ?, disponivel = ?, preco = ?, WHERE id = ?;");
 
             //Setar parametros
-            atualizaQuarto.setString(1, "quarto");
             atualizaQuarto.setString(2, "777");
             atualizaQuarto.setString(3, "Familia");
-            atualizaQuarto.setInt(4, 2);
+            atualizaQuarto.setInt(4, 1);
             atualizaQuarto.setInt(5, 1);
-            atualizaQuarto.setInt(6, 1);
-            atualizaQuarto.setDouble(7, 150.00);
-            atualizaQuarto.setInt(8, 1);
+            atualizaQuarto.setDouble(6, 150.00);
+            atualizaQuarto.setInt(7, 1);
 
             int LinhaAfetada = atualizaQuarto.executeUpdate();
             return LinhaAfetada > 0;
@@ -71,7 +69,7 @@ public class QuartosDAO {
     public void pesquisarQuarto() {
         try {
             Connection condb = conexao.conectar();
-            PreparedStatement buscarQuarto = condb.prepareStatement("SELECT nome, numero, tipo, camaSolteiro, camaCasal, preco, disponivel" + " FROM quartos WHERE id = ?");
+            PreparedStatement buscarQuarto = condb.prepareStatement("SELECT nome, numero, camaSolteiro, camaCasal, preco, disponivel" + " FROM quartos WHERE id = ?");
 
             //Setar parametros
             buscarQuarto.setInt(1, 1);

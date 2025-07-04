@@ -1,13 +1,11 @@
 package view;
 
+import controller.QuartosController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -34,10 +32,6 @@ public class CadQuarto extends Application {
         lblTitulo.setAlignment(Pos.CENTER);
         lblTitulo.setStyle("-fx-font-size: 25px; -fx-font-weight: bold");
 
-        Label lblsubtitulo = new Label("Adicione as Informações do Quarto");
-        lblsubtitulo.setAlignment(Pos.CENTER);// cod Para centralizar o Subtitulo
-        lblsubtitulo.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
-
         BorderPane mainPainel = new BorderPane();
         mainPainel.setLeft(menu);
 
@@ -51,20 +45,20 @@ public class CadQuarto extends Application {
         TextField txtPreco = criarMascaraCampo("R$###,##");
 
         Label lblSol = new Label("Cama de Solterio");
-        Spinner spinnerQuantidadeSolteiro = new Spinner(1,2,1);
+        Spinner<Integer> spinnerQuantidadeSolteiro = new Spinner(1,2,1);
         spinnerQuantidadeSolteiro.setStyle("-fx-background-color: #D6C388FF;" +
                 " -fx-border-width: 2px; -fx-border-radius: 5px;");
         spinnerQuantidadeSolteiro.setMaxWidth(100);
 
         Label lblCasal = new Label("Cama de Casal");
-        Spinner spinnerQuantidadeCasal = new Spinner(1,2,1);
+        Spinner<Integer> spinnerQuantidadeCasal = new Spinner(1,2,1);
         spinnerQuantidadeCasal.setStyle("-fx-background-color: #D6C388FF;" +
                 " -fx-border-width: 2px; -fx-border-radius: 5px;");
         spinnerQuantidadeCasal.setMaxWidth(100);
 
-        ComboBox<String> BoxQuatos = new ComboBox<>();
-        BoxQuatos.setPromptText("Tipo de Quarto");
-        BoxQuatos.getItems().addAll("Solteiro","Casal",
+        ComboBox<String> BoxQuartos = new ComboBox<>();
+        BoxQuartos.setPromptText("Tipo de Quarto");
+        BoxQuartos.getItems().addAll("Solteiro","Casal",
                 "Suite","Suite Master","Luxuoso");
 
         ComboBox<String> BoxDisponivel = new ComboBox<>();
@@ -73,7 +67,7 @@ public class CadQuarto extends Application {
 
 
         GridPane FormGrid = new GridPane();
-        FormGrid.add(txtNome,1,0); FormGrid.add(lblNome,0,0); FormGrid.add(BoxQuatos,2,0);
+        FormGrid.add(txtNome,1,0); FormGrid.add(lblNome,0,0); FormGrid.add(BoxQuartos,2,0);
 
         FormGrid.add(txtNumero, 1, 1); FormGrid.add(lblNumero,0 ,1);
 
@@ -87,23 +81,54 @@ public class CadQuarto extends Application {
 
         FormGrid.add(buttons,1,6);
 
+
+
         FormGrid.setPadding(new Insets(20, 20, 20, 20));
         FormGrid.setHgap(10);
         FormGrid.setVgap(10);
         FormGrid.setAlignment(Pos.CENTER);
 
-        HBox tituloBox = new HBox(lblTitulo,lblsubtitulo);
+        HBox tituloBox = new HBox(lblTitulo);
         tituloBox.setAlignment(Pos.CENTER);
         tituloBox.setSpacing(10);tituloBox.setPadding(new Insets(20, 20, 20,20));
         tituloBox.setAlignment(Pos.CENTER);
+
+        buttons.btnCadastrar.setOnAction(evento ->{
+            String nome = txtNome.getText();
+            String numero = txtNumero.getText();
+            double preco = Double.parseDouble(txtPreco.getText());
+            int camaCasal = spinnerQuantidadeCasal.getValue();
+            int camaSolteiro = spinnerQuantidadeSolteiro.getValue();
+            String disponivel = (String) BoxDisponivel.getSelectionModel().getSelectedItem();
+
+            boolean isDispovivel;
+            if (disponivel.equals("Disponivel")) {
+                isDispovivel = true;
+            } else  {
+                isDispovivel = false;
+            }
+            QuartosController quartosController = new QuartosController();
+
+            boolean sucessoInsercao = quartosController.verificarInfosQuartos(nome,numero,camaCasal,camaSolteiro,isDispovivel,preco);
+            if (sucessoInsercao) {
+                System.out.println("Quarto realizado com sucesso!");
+            } else {
+                System.out.println("Não foi possivel cadastrar quarto!");
+            }
+        });
 
         VBox layout = new VBox(10,tituloBox,FormGrid);
         layout.setAlignment(Pos.CENTER);
         mainPainel.setCenter(layout);
 
-        Scene scene = new Scene(mainPainel, 740, 400);
-        janela.setTitle("Grand Hotel");
+        BorderPane borderPane = new BorderPane();
+
+
+        Scene scene = new Scene(mainPainel, 850, 500);
         janela.setScene(scene);
+        janela.getIcons().add(new Image("/view/resources/img/bed.png"));
+        janela.show();
+        janela.setResizable(false);
         janela.show();
     }
     private TextField criarMascaraCampo(String mascara) {

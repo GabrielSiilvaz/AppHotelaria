@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class PainelButtons extends HBox {
+    public Button btnCadastrar = new Button("Cadastrar");
+    public Button btnAtualizar = new Button("Atualizar");
+    public Button btnExcluir = new Button("Excluir");
 
 
     public PainelButtons() {
@@ -37,9 +40,9 @@ public class PainelButtons extends HBox {
         viewiconBtnDel.setFitHeight(20);
         viewiconBtnDel.setOpacity(1);
 
-        Button btnCadastrar = new Button("Cadastrar", viewiconBtnCad);
-        Button btnAtualizar = new Button("Atualizar", viewiconBtnUp);
-        Button btnExcluir = new Button("Excluir", viewiconBtnDel);
+        btnCadastrar.setGraphic(viewiconBtnCad);
+        btnAtualizar.setGraphic(viewiconBtnUp);
+        btnExcluir.setGraphic(viewiconBtnDel);
 
         setAlignment(Pos.CENTER);
         setSpacing(10);

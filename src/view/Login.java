@@ -1,5 +1,6 @@
 package view;
 
+import controller.UsuarioController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -61,9 +62,25 @@ public class Login extends Application {
 
         Button loginButton = new Button("Login");
         HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().add(loginButton);
         grid.add(hbBtn, 1, 4);
+
+        /*Usuario clica no botão Login para se autenticar com os valores dos campos
+        txtEmail e txtSenha (senha visivel) || campo
+         */
+        loginButton.setOnAction(evento -> {
+            String email = emailField.getText();
+            String senha = passwordField.isVisible() ? passwordField.getText() : null;
+
+            UsuarioController  usuarioController = new UsuarioController();
+            boolean loginSucesso = usuarioController.verificarCredenciais(email, senha);
+            if (loginSucesso) {
+            System.out.println("Login efetuado com sucesso");
+            } else {
+                System.out.println("Login invalido");
+            }
+        });
 
 
         BorderPane borderPane = new BorderPane();
@@ -73,6 +90,7 @@ public class Login extends Application {
 
         Scene scene = new Scene(borderPane, 800, 500);
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image("/view/resources/img/user.png"));
         primaryStage.show();
         primaryStage.setResizable(false);
         primaryStage.show();
